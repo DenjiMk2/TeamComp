@@ -1,0 +1,49 @@
+[
+  {
+  "id":"Annie",
+  "dispName":"アニー",
+  "name":["Anie","釘宮"],
+  "skill":["イニシエーター","ハードCC"],
+  "friendRelation":[
+    {
+      "relationName":"シナジー",
+      "toMenber":"Zaq",
+      "discription":"zaqUltでまとめて回収したところをpassiv+Ultでまとめてスタン"
+    }
+  ],
+  "enemyRelation":[
+    {
+      "relationName":"カウンター",
+      "toMenber":"Yasuo",
+      "discription":""
+    }
+  ]
+},{
+  "id":"Xrath",
+  "dispName":"ゼラス",
+  "name":["xrath"],
+  "skill":["ポーク"],
+  "friendRelation":[
+  ],
+  "enemyRelation":[
+    {
+      "relationName":"カウンター",
+      "toMenber":"Annie",
+      "discription":"レンジ勝ち"
+    }
+  ]},{
+  "id":"Yasuo",
+  "dispName":"ヤスオ",
+  "name":["yasuo"],
+  "skill":["アサシン"],
+  "friendRelation":[
+  ],
+  "enemyRelation":[
+    {
+      "relationName":"カウンター",
+      "toMenber":"Heimerdinger",
+      "discription":""
+    }
+  ]
+}
+]
