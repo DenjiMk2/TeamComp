@@ -19,6 +19,15 @@ $(function(){
     }else{
       $.data(this,"data",null);
     }
+    dispReflesh();
+  });
+  $('#enemyTeam').on('input','input',function(){
+    if(nameDict[$(this).val()] !== undefined ){
+      $.data(this,"data",datas[nameDict[$(this).val()]]);
+    }else{
+      $.data(this,"data",null);
+    }
+    dispReflesh();
   });
 });
 var getFriendTeamName = function(){
@@ -62,4 +71,33 @@ var createNameDict = function(datas){
     }
   }
   return ret;
+}
+var dispReflesh = function(){
+  var friends = $('#friendTeam input');
+  var enemys = $('#enemyTeam input');
+  for(i in friends){
+    for(j in enemys){
+      var from = friends[i];
+      var to = enemys[j];
+      dispRelation(from,to,false);
+      dispRelation(to,from,false);
+    }
+  }
+}
+//stat=trueの場合同じチーム
+var dispRelation = function(from,to,stat){
+  var relation;
+  if(!$.data(from,"data") || !$.data(to,"data")){
+    return;
+  }
+  if(stat){
+    relation = $.data(from,"data").friendRelation;
+  }else{
+    relation = $.data(from,"data").enemyRelation;
+  }
+  for(i in relation){
+    if(relation[i].toMenber == $.data(to,"data").id){
+      connectElement(from,to);
+    }
+  }
 }
