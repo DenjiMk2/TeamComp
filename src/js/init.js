@@ -45,7 +45,7 @@ var getEnemyTeamName = function(){
   return ret;
 }
 var connectElement = function(from,to){
-  new LeaderLine(
+  return new LeaderLine(
     from,
     to,
     {
@@ -75,17 +75,31 @@ var createNameDict = function(datas){
 var dispReflesh = function(){
   var friends = $('#friendTeam input');
   var enemys = $('#enemyTeam input');
-  for(i in friends){
-    for(j in enemys){
-      var from = friends[i];
-      var to = enemys[j];
-      dispRelation(from,to,false);
-      dispRelation(to,from,false);
+  for(var i=0;i<friends.length;i++){
+    var relations=[];
+    for(var j=0;j<friends.length;j++){
+      if(i == j) continue;
+      var tempRelation = dispRelation(friends[i],friends[j],true);
+      if(tempRelation != null){
+        for(var r=0 ;r<tempRelation.length;r++){
+          relations.push(tempRelation[r]);
+        }
+      }
     }
+    for(j in enemys){
+      var tempRelation = dispRelation(friends[i],enemys[j],false);
+      if(tempRelation != null){
+        for(r in tempRelation){
+          relations.push(tempRelation[r]);
+        }
+      }
+    }
+    $.data(friends[i],"relation",relations);
   }
 }
 //stat=trueの場合同じチーム
 var dispRelation = function(from,to,stat){
+  var ret = [];
   var relation;
   if(!$.data(from,"data") || !$.data(to,"data")){
     return;
@@ -97,7 +111,8 @@ var dispRelation = function(from,to,stat){
   }
   for(i in relation){
     if(relation[i].toMenber == $.data(to,"data").id){
-      connectElement(from,to);
+      ret.push({'obj':connectElement(from,to),'to':to});
     }
   }
+  return ret;
 }
