@@ -73,6 +73,7 @@ var createNameDict = function(datas){
   return ret;
 }
 var dispReflesh = function(){
+  allRemoveRelation();
   var friends = $('#friendTeam input');
   var enemys = $('#enemyTeam input');
   for(var i=0;i<friends.length;i++){
@@ -95,6 +96,26 @@ var dispReflesh = function(){
       }
     }
     $.data(friends[i],"relation",relations);
+  }
+}
+var allRemoveRelation = function(){
+  var friends = $('#friendTeam input');
+  var enemys = $('#enemyTeam input');
+  for(var i=0;i<friends.length;i++){
+    var re = $.data(friends[i],"relation");
+    if(!re) continue;
+    $.data(friends[i],"relation",null);
+    for(var j=0;j<re.length;j++){
+      re[j]['obj'].remove();
+    }
+  }
+  for(var i=0;i<enemys.length;i++){
+    var re = $.data(enemys[i],"relation");
+    if(!re) continue;
+    $.data(enemys[i],"relation",null);
+    for(var j=0;j<re.length;j++){
+      re[j]['obj'].remove();
+    }
   }
 }
 //stat=trueの場合同じチーム
