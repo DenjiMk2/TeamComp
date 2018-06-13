@@ -45,5 +45,13 @@
       "discription":""
     }
   ]
-}
+},{
+  "id":"Zaq",
+  "dispName":"ザック",
+  "name":["zaq","スライム"],
+  "skill":["イニシエーター"],
+  "friendRelation":[
+  ],
+  "enemyRelation":[
+  ]}
 ]
