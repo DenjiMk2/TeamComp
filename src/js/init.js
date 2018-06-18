@@ -86,6 +86,53 @@ var dispReflesh = function(){
     }
   }
 }
+var updateRelation = function(target){
+  //右側チームだった場合、friendとenemeyは逆
+  if(/enemy.*/.test($(target).attr('id'))){
+    var enemys = $('#friendTeam input');
+    var friends = $('#enemyTeam input');
+  }else{
+    var friends = $('#friendTeam input');
+    var enemys = $('#enemyTeam input');
+  }
+  //targetに関連するrelationをすべて削除
+  var relations = $.data(target,"relation");
+  $.data(target,"relation",null);
+  if(relations){
+    for(var i=0;i<relations.length;i++){
+      relations[i]['obj'].remove();
+    }
+  }
+  for(var i=0;i<friends.length;i++){
+    var friendRelation = $.data(friends[i],"relation");
+    if(friendRelation == undefined) continue;
+    friendRelation = friendRelation.filter(function(a){
+      if(a['to'].attr('id') != $(target).attr('id')){
+        a['obj'].remove();
+        return false;
+      }
+      return true;
+    });
+    $.data(friends[i],"relation",friendRelation);
+  }
+  for(var i=0;i<enemys.length;i++){
+    var enemyRelation = $.data(enemys[i],"relation");
+    if(enemyRelation == undefined) continue;
+    enemyRelation = enemyRelation.filter(function(a){
+      if(a['to'].attr('id') != $(target).attr('id')){
+        a['obj'].remove();
+        return false;
+      }
+      return true;
+    });
+    $.data(enemys[i],"relation",enemyRelation);
+  }
+  //targetとのrelationを構築
+  for(var i=0;i<friends.length;i++){
+    dispRelation(target,friends[i],true);
+  }
+  for(var i=0;i<enemys.length;i++){
+    dispRelation(target,enemys[i],false);
   }
 }
 var allRemoveRelation = function(){
