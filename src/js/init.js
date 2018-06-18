@@ -77,25 +77,15 @@ var dispReflesh = function(){
   var friends = $('#friendTeam input');
   var enemys = $('#enemyTeam input');
   for(var i=0;i<friends.length;i++){
-    var relations=[];
     for(var j=0;j<friends.length;j++){
       if(i == j) continue;
-      var tempRelation = dispRelation(friends[i],friends[j],true);
-      if(tempRelation != null){
-        for(var r=0 ;r<tempRelation.length;r++){
-          relations.push(tempRelation[r]);
-        }
-      }
+      dispRelation(friends[i],friends[j],true);
     }
     for(j in enemys){
-      var tempRelation = dispRelation(friends[i],enemys[j],false);
-      if(tempRelation != null){
-        for(r in tempRelation){
-          relations.push(tempRelation[r]);
-        }
-      }
+      dispRelation(friends[i],enemys[j],false);
     }
-    $.data(friends[i],"relation",relations);
+  }
+}
   }
 }
 var allRemoveRelation = function(){
@@ -135,5 +125,14 @@ var dispRelation = function(from,to,stat){
       ret.push({'obj':connectElement(from,to),'to':to});
     }
   }
-  return ret;
+  if(!ret){
+    return;
+  }
+  var beforRelation = $.data(from,"relation");
+  if(beforRelation == null){
+    $.data(from,"relation",ret);
+    return;
+  }
+  $.data(from,"relation",beforRelation.concat(ret));
+  return;
 }
