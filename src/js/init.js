@@ -30,6 +30,10 @@ $(function(){
     dispReflesh();
   });
 });
+/**
+ * FriendTeam(左側)の値を取得する。
+ * @return {Array.<String>} FriendTeamの名前配列 未入力欄には""が挿入される
+ */
 var getFriendTeamName = function(){
   var ret = [];
   $('#friendTeam input').each(function(){
@@ -37,6 +41,10 @@ var getFriendTeamName = function(){
   });
   return ret;
 }
+/**
+ * EnemyTeam(右側)の値を取得する。
+ * @return {Array.<String>} EnemyTeamの名前配列 未入力欄には""が挿入される
+ */
 var getEnemyTeamName = function(){
   var ret = [];
   $('#enemyTeam input').each(function(){
@@ -44,6 +52,13 @@ var getEnemyTeamName = function(){
   });
   return ret;
 }
+/**
+ * 要素と要素を矢印でつないで表示する。
+ * @param {Object} from 矢印が出る元となる要素
+ * @param {Object} to 矢印が指し示す要素
+ * @return {Object} 生成した矢印のLeaderLineオブジェクト
+ *
+ */
 var connectElement = function(from,to){
   return new LeaderLine(
     from,
@@ -54,6 +69,11 @@ var connectElement = function(from,to){
     }
   );
 }
+/**
+ * 配列から、配列内容のオブジェクトのIDをキーとした辞書に変換
+ * @param {Array.<Object>} detas data型オブジェクトの配列
+ * @return {Object.<String,Object>} 引数のObjectからIDの値をキーにしたオブジェクト
+ */
 var convertJson2Datas = function(detas){
   var ret = {};
   for(i in detas){
@@ -72,6 +92,9 @@ var createNameDict = function(datas){
   }
   return ret;
 }
+/**
+ * 現在のdataを使用して画面の矢印を再描画
+ */
 var dispReflesh = function(){
   allRemoveRelation();
   var friends = $('#friendTeam input');
@@ -95,6 +118,12 @@ var dispReflesh = function(){
     }
   }
 }
+/**
+ * 指定した一つの要素に対しての矢印を再描画する。
+ * 再描画は実行時の@code{$.data(elm,"data")}の値を使用する
+ * @param {Object} target 再描画する対象のinput要素
+ *
+ */
 var updateRelation = function(target){
   //右側チームだった場合、friendとenemeyは逆
   if(/enemy.*/.test($(target).attr('id'))){
@@ -144,6 +173,9 @@ var updateRelation = function(target){
     dispRelation(target,enemys[i],false);
   }
 }
+/**
+ * すべての矢印を@code{$.data(elm,"relation")}から削除し、矢印の描画を消す
+ */
 var allRemoveRelation = function(){
   var friends = $('#friendTeam input');
   var enemys = $('#enemyTeam input');
@@ -164,7 +196,12 @@ var allRemoveRelation = function(){
     }
   }
 }
-//stat=trueの場合同じチーム
+/**
+ * 引数で指定した要素に対して、@code{$.data(elm,"data")}を参照し、適切な矢印を生成し、結果を@code{$.data(elm,"relation")}に格納する。
+ * @param {Object} from 矢印の元になるinput要素
+ * @param {Object} to 矢印の先になるinput要素
+ * @param {boolean} stat formとtoが同じチームか
+ */
 var dispRelation = function(from,to,stat){
   var ret = [];
   var relation;
