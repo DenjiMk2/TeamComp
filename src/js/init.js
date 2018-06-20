@@ -85,6 +85,15 @@ var dispReflesh = function(){
       dispRelation(friends[i],enemys[j],false);
     }
   }
+  for(var i=0;i<enemys.length;i++){
+    for(var j=0;j<enemys.length;j++){
+      if(i == j) continue;
+      dispRelation(enemys[i],enemys[j],true);
+    }
+    for(var j=0;j<friends.length;j++){
+      dispRelation(enemys[i],friends[j],false);
+    }
+  }
 }
 var updateRelation = function(target){
   //右側チームだった場合、friendとenemeyは逆
