@@ -14,22 +14,38 @@ $(function(){
   }
 
   $('#friendTeam').on('input','input',function(){
-    if(nameDict[$(this).val()] !== undefined ){
-      $.data(this,"data",datas[nameDict[$(this).val()]]);
-    }else{
-      $.data(this,"data",null);
-    }
-    dispReflesh();
+    updateData(this);
+    updateRelation(this);
   });
   $('#enemyTeam').on('input','input',function(){
-    if(nameDict[$(this).val()] !== undefined ){
-      $.data(this,"data",datas[nameDict[$(this).val()]]);
-    }else{
-      $.data(this,"data",null);
-    }
-    dispReflesh();
+    updateData(this);
+    updateRelation(this);
   });
 });
+/**
+ * 対象の入力欄を読み取り、$.data(elm,"data")を更新する。
+ * @param {Object} target データを更新したい要素
+ */
+var updateData = function(target){
+  if(nameDict[$(target).val()] !== undefined ){
+    $.data(target,"data",datas[nameDict[$(target).val()]]);
+  }else{
+    $.data(target,"data",null);
+  }
+}
+/**
+ * すべての入力欄から$.data(elm,"data")を更新する。
+ */
+var allUpdateData = function(){
+  var friends = $('#friendTeam input');
+  for(var i=0;i<friends.length;i++){
+    updateData(friends[i]);
+  }
+  var enemys = $('#enemyTeam input');
+  for(var i=0;i<enemys.length;i++){
+    updateData(enemys[i]);
+  }
+}
 /**
  * FriendTeam(左側)の値を取得する。
  * @return {Array.<String>} FriendTeamの名前配列 未入力欄には""が挿入される
